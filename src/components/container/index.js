@@ -1,0 +1,10 @@
+import style from "./Containder.module.css"
+
+function Container({ children }) {
+    return (
+        <section className={style.container}>
+            {children}
+        </section>
+    )
+}
+export default Container;
