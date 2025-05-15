@@ -23,3 +23,13 @@ export const getcinetagById = async (id) => {
         throw error;
     }
 };
+
+export const updatecinetag = async (id, fav) => {
+    try {
+        const result = await sql.query(`UPDATE cinetags SET favoritos = ${fav} WHERE id = ${id}`);
+        return result;
+    } catch (error) {
+        console.error('Erro ao atualizar cinetag:', error);
+        throw error;
+    }
+}
