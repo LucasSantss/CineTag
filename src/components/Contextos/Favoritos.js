@@ -14,7 +14,6 @@ export default function FavoritosProvider({ children }) {
         </FavoritosContext.Provider>
     )
 }
-
 export function useFavoritoContext() {
     const { favorito, setFavorito } = useContext(FavoritosContext);
 
