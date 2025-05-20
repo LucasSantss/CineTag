@@ -20,7 +20,6 @@ function Inicio() {
         fetchFilmes();
     }, [])
 
-
     return (
         <>
             <Banner imagem="home" />

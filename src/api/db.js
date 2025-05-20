@@ -6,7 +6,7 @@ const sql = neon(API_KEY);
 
 export const getcinetag = async () => {
     try {
-        const result = await sql`SELECT * FROM cinetags`;
+        const result = await sql`SELECT * FROM cinetags ORDER BY id ASC`;
         return result;
     } catch (error) {
         console.error('Erro ao buscar cinetags:', error);
@@ -16,7 +16,7 @@ export const getcinetag = async () => {
 
 export const getcinetagById = async (id) => {
     try {
-        const result = await sql.query(`SELECT * FROM cinetags WHERE id = ${id}`);
+        const result = await sql.query(`SELECT * FROM cinetags WHERE id = ${id} `);
         return result;
     } catch (error) {
         console.error('Erro ao buscar cinetag por ID:', error);
@@ -24,9 +24,11 @@ export const getcinetagById = async (id) => {
     }
 };
 
-export const updatecinetag = async (id, fav) => {
+export const updatecinetag = async (novoFavorito) => {
     try {
-        const result = await sql.query(`UPDATE cinetags SET favoritos = ${fav} WHERE id = ${id}`);
+        const result = await sql.query(`UPDATE cinetags SET favoritos = $1 WHERE id = $2`, [novoFavorito.favoritos, novoFavorito.id]);
+        console.log(novoFavorito)
+        window.location.reload();
         return result;
     } catch (error) {
         console.error('Erro ao atualizar cinetag:', error);
