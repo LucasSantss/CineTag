@@ -15,21 +15,22 @@ function Player() {
         }
         fetchFilmes();
     }, []);
-    console.log(filmes)
-    return (
 
+    return (
         <>
             <Banner imagem="player" />
             <Titulo>
                 <h1>Player</h1>
+
             </Titulo>
             <section >
-                <iframe width="100%"
+                <h1>{filmes.titulo}</h1>
+                <iframe
+                    width="100%"
                     height="100%"
                     src={filmes.link}
                     title={filmes.titulo}
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                    frameborder="0" allowfullscreen>
                 </iframe>
             </section>
         </>
