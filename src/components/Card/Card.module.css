@@ -27,3 +27,9 @@
 .favoritar {
     width: 20px;
 }
+
+.link {
+    text-decoration: none;
+    color: var(--preto);
+    text-align: left;
+}

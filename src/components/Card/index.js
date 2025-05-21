@@ -4,6 +4,7 @@ import iconeFavoritar from './favoritar.png';
 import iconeDesfavoritar from './desfavoritar.png';
 import { getcinetag } from 'api/db';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Card({ id, titulo, capa }) {
 
@@ -22,8 +23,10 @@ function Card({ id, titulo, capa }) {
 
     return (
         <div className={style.container}>
-            <img src={capa} alt={titulo} className={style.capa} />
-            <h2>{titulo}</h2>
+            <Link className={style.link} to={`/${id}`}>
+                <img src={capa} alt={titulo} className={style.capa} />
+                <h2>{titulo}</h2>
+            </Link>
             <img src={icone} alt='Favoritar filme' className={style.favoritar} onClick={() => { adicionarFavorito({ id, favoritos: !filmes }) }} />
         </div>
     )

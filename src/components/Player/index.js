@@ -1,0 +1,38 @@
+import styles from './Player.module.css';
+import { getcinetag } from "api/db";
+import Banner from "components/Banner";
+import Titulo from "components/Titulo";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+function Player() {
+    const parametros = useParams();
+    const [filmes, setFilmes] = useState([]);
+    useEffect(() => {
+        async function fetchFilmes() {
+            const filmesDaAPI = await getcinetag();
+            setFilmes(filmesDaAPI.find((filme) => filme.id === Number(parametros.id)));
+        }
+        fetchFilmes();
+    }, []);
+    console.log(filmes)
+    return (
+
+        <>
+            <Banner imagem="player" />
+            <Titulo>
+                <h1>Player</h1>
+            </Titulo>
+            <section >
+                <iframe width="100%"
+                    height="100%"
+                    src={filmes.link}
+                    title={filmes.titulo}
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                </iframe>
+            </section>
+        </>
+    )
+}
+export default Player;
