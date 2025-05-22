@@ -1,6 +1,7 @@
 import styles from './Player.module.css';
 import { getcinetag } from "api/db";
 import Banner from "components/Banner";
+import NaoEncontrada from 'components/NaoEncontrada';
 import Titulo from "components/Titulo";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -16,6 +17,9 @@ function Player() {
         fetchFilmes();
     }, []);
 
+    if (!filmes) {
+        return < NaoEncontrada />
+    }
     return (
         <>
             <Banner imagem="player" />
