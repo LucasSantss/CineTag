@@ -6,7 +6,7 @@ import { getcinetag } from 'api/db';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function Card({ id, titulo, capa }) {
+function Card({ id, titulo, capa, onRemoverFavorito }) {
     const { adicionarFavorito } = useFavoritoContext(getcinetag());
 
     const [ehFavorito, setEhFavorito] = useState(false);
@@ -24,15 +24,15 @@ function Card({ id, titulo, capa }) {
     }, [id]);
 
     const handleClick = async () => {
-        // Inverte o estado de favorito
         const novoStatus = !ehFavorito;
-
-        // Atualiza o banco de dados
         await adicionarFavorito({ id, favoritos: novoStatus });
-
-        // Atualiza o estado local
         setEhFavorito(novoStatus);
+
+        if (!novoStatus && onRemoverFavorito) {
+            onRemoverFavorito(id);
+        }
     };
+
 
     const icone = ehFavorito ? iconeDesfavoritar : iconeFavoritar;
 

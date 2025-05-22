@@ -6,6 +6,14 @@ import Card from 'components/Card';
 import { getcinetag } from 'api/db';
 
 function Favoritos() {
+    const removerFavoritoDaLista = (id) => {
+        setFilmes((prevFilmes) =>
+            prevFilmes.map((filme) =>
+                filme.id === id ? { ...filme, favoritos: false } : filme
+            )
+        );
+    };
+
     const [favoritos, setFilmes] = useState([]);
     useEffect(() => {
         const fetchFilmes = async () => {
@@ -26,7 +34,8 @@ function Favoritos() {
             <section className={style.container}>
                 {favoritos.filter((fav) => fav.favoritos === true)
                     .map((fav) => {
-                        return <Card {...fav} key={fav.id} />
+                        return <Card {...fav} key={fav.id} onRemoverFavorito={removerFavoritoDaLista} />
+
                     })}
             </section>
         </>
