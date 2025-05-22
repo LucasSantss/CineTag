@@ -7,19 +7,34 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Card({ id, titulo, capa }) {
-
     const { adicionarFavorito } = useFavoritoContext(getcinetag());
 
-    const [filmes, setFilmes] = useState([]);
-    useEffect(() => {
-        async function fetchFilmes() {
-            const filmesDaAPI = await getcinetag();
-            setFilmes(filmesDaAPI.some((filme) => filme.favoritos === true && filme.id === id));
-        }
-        fetchFilmes();
-    }, []);
+    const [ehFavorito, setEhFavorito] = useState(false);
 
-    const icone = filmes ? iconeDesfavoritar : iconeFavoritar;
+    useEffect(() => {
+        async function fetchFavorito() {
+            const filmesDaAPI = await getcinetag();
+            const isFavorito = filmesDaAPI.some(
+                (filme) => filme.favoritos === true && filme.id === id
+            );
+            setEhFavorito(isFavorito);
+        }
+
+        fetchFavorito();
+    }, [id]);
+
+    const handleClick = async () => {
+        // Inverte o estado de favorito
+        const novoStatus = !ehFavorito;
+
+        // Atualiza o banco de dados
+        await adicionarFavorito({ id, favoritos: novoStatus });
+
+        // Atualiza o estado local
+        setEhFavorito(novoStatus);
+    };
+
+    const icone = ehFavorito ? iconeDesfavoritar : iconeFavoritar;
 
     return (
         <div className={style.container}>
@@ -27,8 +42,13 @@ function Card({ id, titulo, capa }) {
                 <img src={capa} alt={titulo} className={style.capa} />
                 <h2>{titulo}</h2>
             </Link>
-            <img src={icone} alt='Favoritar filme' className={style.favoritar} onClick={() => { adicionarFavorito({ id, favoritos: !filmes }) }} />
+            <img
+                src={icone}
+                alt="Favoritar filme"
+                className={style.favoritar}
+                onClick={handleClick}
+            />
         </div>
-    )
+    );
 }
 export default Card;

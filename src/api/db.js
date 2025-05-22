@@ -27,8 +27,6 @@ export const getcinetagById = async (id) => {
 export const updatecinetag = async (novoFavorito) => {
     try {
         const result = await sql.query(`UPDATE cinetags SET favoritos = $1 WHERE id = $2`, [novoFavorito.favoritos, novoFavorito.id]);
-        console.log(novoFavorito)
-        window.location.reload();
         return result;
     } catch (error) {
         console.error('Erro ao atualizar cinetag:', error);
